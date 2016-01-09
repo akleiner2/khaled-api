@@ -5,6 +5,8 @@ require 'sinatra/activerecord'
 require "./config/environment"
 require './models/quote'
 
+set :protection, :except => [:json_csrf]
+
 helpers do
   def protected!
     return if authorized?
@@ -40,9 +42,11 @@ post '/quote' do
     end
 end
 
-# TODO: Searches for a random quote containing the word in the endpoint. Returns "Business is not booming." otherwise.
+# Returns an array of all Khaled quotes which contain the key. Empty otherwise. 
 get '/:quote' do 
-    params[:quote]
+    content_type :json 
+    quotes = KhaledQuote.where("quotes LIKE ?, % #{param[:quote]} %").all.to_a.map!{|x| x.quote }
+    {:data: quotes}
 end
 
 get '/' do 
