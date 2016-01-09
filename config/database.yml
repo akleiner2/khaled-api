@@ -1,6 +1,6 @@
 development:
   adapter: postgresql
-  database: quotes
+  database: <$= ENV['DATABASE_URL'] %>
   username: <%= ENV['PG_USER'] %>
   password: <%= ENV['PG_PASS'] %>
   host: localhost
