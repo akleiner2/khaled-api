@@ -46,7 +46,7 @@ end
 get '/:quote' do 
     content_type :json 
     quotes = KhaledQuote.where("quotes LIKE ?, % #{param[:quote]} %").all.to_a.map!{|x| x.quote }
-    {:data: quotes}
+    {:data => quotes}
 end
 
 get '/' do 
